@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11716.218 insiders
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6AF52BF6-60C9-4158-A2FB-015475332CA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrendSense.Domain", "TrendSense.Domain\TrendSense.Domain.csproj", "{865BCB66-5BD6-47FD-807D-6173D9539196}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrendSense.Application", "TrendSense.Application\TrendSense.Application.csproj", "{FCF1C0FF-F06C-4603-83C6-E58D4E463410}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C95E2799-90E2-451A-A0D8-656F81A5DC69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C1817009-235D-46D8-AE93-333158181C3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrendSense.Persistence", "TrendSense.Persistence\TrendSense.Persistence.csproj", "{CE84E352-02DF-4868-BE5D-7369880C5A11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrendSense.WebApi", "TrendSense.WebApi\TrendSense.WebApi.csproj", "{D43490A7-7991-43D6-A76A-A9426D8D44AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{865BCB66-5BD6-47FD-807D-6173D9539196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{865BCB66-5BD6-47FD-807D-6173D9539196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{865BCB66-5BD6-47FD-807D-6173D9539196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{865BCB66-5BD6-47FD-807D-6173D9539196}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCF1C0FF-F06C-4603-83C6-E58D4E463410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCF1C0FF-F06C-4603-83C6-E58D4E463410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCF1C0FF-F06C-4603-83C6-E58D4E463410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCF1C0FF-F06C-4603-83C6-E58D4E463410}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE84E352-02DF-4868-BE5D-7369880C5A11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE84E352-02DF-4868-BE5D-7369880C5A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE84E352-02DF-4868-BE5D-7369880C5A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE84E352-02DF-4868-BE5D-7369880C5A11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D43490A7-7991-43D6-A76A-A9426D8D44AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D43490A7-7991-43D6-A76A-A9426D8D44AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D43490A7-7991-43D6-A76A-A9426D8D44AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D43490A7-7991-43D6-A76A-A9426D8D44AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{865BCB66-5BD6-47FD-807D-6173D9539196} = {6AF52BF6-60C9-4158-A2FB-015475332CA4}
+		{FCF1C0FF-F06C-4603-83C6-E58D4E463410} = {6AF52BF6-60C9-4158-A2FB-015475332CA4}
+		{CE84E352-02DF-4868-BE5D-7369880C5A11} = {C1817009-235D-46D8-AE93-333158181C3B}
+		{D43490A7-7991-43D6-A76A-A9426D8D44AD} = {C95E2799-90E2-451A-A0D8-656F81A5DC69}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2707D9CC-F677-481D-A245-DE15C79A3CA6}
+	EndGlobalSection
+EndGlobal
