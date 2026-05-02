@@ -8,11 +8,20 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.26" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TrendSense.Domain\TrendSense.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Auth\Commands\Register\" />
+    <Folder Include="Features\Auth\Commands\Login\" />
+    <Folder Include="Features\PriceHistory\Queries\" />
+    <Folder Include="Features\Stocks\Queries\" />
+    <Folder Include="Features\WatchLists\Queries\" />
   </ItemGroup>
 
 </Project>
