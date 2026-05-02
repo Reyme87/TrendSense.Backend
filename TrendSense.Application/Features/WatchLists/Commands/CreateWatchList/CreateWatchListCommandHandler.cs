@@ -2,7 +2,7 @@
 using TrendSense.Application.Interfaces;
 using TrendSense.Domain;
 
-namespace TrendSense.Application.Features.WatchLists.Commands
+namespace TrendSense.Application.Features.WatchLists.Commands.CreateWatchList
 {
     public class CreateWatchListCommandHandler : IRequestHandler<CreateWatchListCommand, Guid>
     {
