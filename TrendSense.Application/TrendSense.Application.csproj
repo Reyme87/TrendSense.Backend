@@ -21,7 +21,6 @@
     <Folder Include="Features\Auth\Commands\Login\" />
     <Folder Include="Features\PriceHistory\Queries\" />
     <Folder Include="Features\Stocks\Queries\" />
-    <Folder Include="Features\WatchLists\Queries\" />
   </ItemGroup>
 
 </Project>
