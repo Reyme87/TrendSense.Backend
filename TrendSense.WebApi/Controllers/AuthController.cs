@@ -14,7 +14,7 @@ namespace TrendSense.WebApi.Controllers
         public async Task<ActionResult<Guid>> Register(RegisterUserCommand command)
         {
             var userId = await Mediator.Send(command);
-            return Ok(id);
+            return Ok(userId);
         }
 
         [HttpPost("login")]
