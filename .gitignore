@@ -366,3 +366,4 @@ appsettings.json
 appsettings.*.json
 /TrendSense.WebApi/appsettings.json
 /TrendSense.Domain/Properties/launchSettings.json
+/TrendSense.WebApi/TrendSense.db
