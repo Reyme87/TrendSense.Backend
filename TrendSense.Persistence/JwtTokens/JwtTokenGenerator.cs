@@ -2,12 +2,11 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using TrendSense.Application.Features.Auth.Commands.Login;
 using TrendSense.Application.Interfaces;
 using TrendSense.Domain;
 
-namespace TrendSense.Application.Common.JwtTokens
+namespace TrendSense.Persistence.Common.JwtTokens
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
