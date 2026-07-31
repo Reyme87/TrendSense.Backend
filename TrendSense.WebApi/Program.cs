@@ -12,6 +12,7 @@ using TrendSense.Persistence;
 using TrendSense.Persistence.Common.JwtTokens;
 using TrendSense.Persistence.Common.UserService;
 using TrendSense.WebApi;
+using TrendSense.WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,5 +87,13 @@ app.UseSwaggerUI(config =>
         config.RoutePrefix = string.Empty;
     }
 });
+
+app.UseCustomExceptionHandler();
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
