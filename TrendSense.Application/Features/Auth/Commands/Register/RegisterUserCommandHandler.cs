@@ -27,7 +27,7 @@ namespace TrendSense.Application.Features.Auth.Commands.Register
                 Email = request.Email
             };
 
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)
             {
