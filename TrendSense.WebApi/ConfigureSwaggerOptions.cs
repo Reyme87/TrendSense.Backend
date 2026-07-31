@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Reflection;
 
 namespace TrendSense.WebApi
 {
@@ -20,8 +21,8 @@ namespace TrendSense.WebApi
                     new OpenApiInfo
                     {
                         Version = apiVersion,
-                        Title = $"TrendSense API{apiVersion}",
-                        Description = "API for monitoring exchange",
+                        Title = $"TrendSense API v{apiVersion}",
+                        Description = "REST API for monitoring stock prices and user watchlists",
                         Contact = new OpenApiContact
                         {
                             Name = "Reyme",
@@ -32,6 +33,30 @@ namespace TrendSense.WebApi
                             Name = "Product License"
                         }
                     });
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer",
+                    Name = "Authorization",
+                    Description = "Authorization token"
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+                options.CustomOperationIds(apiDescription => apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null);
             }
         }
     }
