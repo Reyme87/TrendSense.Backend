@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using TrendSense.Application.Interfaces;
 
-namespace TrendSense.Persistence.Common.UserService
+namespace TrendSense.Infrastructure.Common.UserService
 {
     public class CurrentUserService : ICurrentUserService
     {

@@ -6,7 +6,7 @@ using TrendSense.Application.Features.Auth.Commands.Login;
 using TrendSense.Application.Interfaces;
 using TrendSense.Domain;
 
-namespace TrendSense.Persistence.Common.JwtTokens
+namespace TrendSense.Infrastructure.Common.JwtTokens
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
