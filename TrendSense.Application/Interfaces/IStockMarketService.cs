@@ -4,8 +4,6 @@ namespace TrendSense.Application.Interfaces
 {
     public interface IStockMarketService
     {
-        public Task<IReadOnlyCollection<StockMarketDataDto>> GetStocksAsync(CancellationToken cancellationToken);
-
-        public Task<StockMarketDataDto> GetStockAsync(string ticker, CancellationToken cancellationToken);
+        public Task<StockMarketInfo?> GetStockAsync(string secId, CancellationToken cancellationToken);
     }
 }
