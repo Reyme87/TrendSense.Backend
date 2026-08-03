@@ -4,11 +4,14 @@
     {
         public Guid Id { get; set; }
 
-        public string TickerSymbol { get; set; }
-        public string Name { get; set; }
-        
-        public string Exchange { get; set; }
-        public string Sector { get; set; }
+        public string TickerSymbol { get; set; } = null!;
+        public string Name { get; set; } = null!;
+
+        public string Isin { get; set; } = null!;
+        public string Currency { get; set; } = null!;
+
+        public string Exchange { get; set; } = null!;
+        public string Sector { get; set; } = null!;
 
         public decimal LastPrice { get; set; }
 
