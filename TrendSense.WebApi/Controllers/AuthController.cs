@@ -47,7 +47,7 @@ namespace TrendSense.WebApi.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<AuthResultDto>> Login(LoginUserCommand command)
+        public async Task<ActionResult<AuthResultDto>> Login([FromBody] LoginUserCommand command)
         {
             var authResult = await Mediator.Send(command);
             return Ok(authResult);
