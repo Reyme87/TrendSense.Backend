@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
+using System.Timers;
 using TrendSense.Application.Dtos;
 using TrendSense.Application.Interfaces;
 using TrendSense.Infrastructure.Moex.Dtos;
@@ -79,7 +81,69 @@ namespace TrendSense.Infrastructure.Moex
             };
         }
 
-        private async Task<MoexMarketDataResponse?> GetMoexResponseAsync(string secId, CancellationToken cancellationToken)
+        public async Task<IReadOnlyList<StockMarketInfo?>> GetStocksListAsync(CancellationToken cancellationToken)
+        {
+            const string url = "engines/stock/markets/shares/boards/TQBR/securities.json";
+
+            var response = await _httpClient.GetFromJsonAsync<MoexResponse>(url, cancellationToken);
+
+            if (response?.Securities?.Data is null || response.Securities.Data.Count == 0)
+            {
+                return [];
+            }
+
+            var result = new List<StockMarketInfo>();
+
+            var marketDataBySecId = new Dictionary<string, Dictionary<string, JsonElement>>();
+
+            if (response.MarketData?.Data != null)
+            {
+                foreach (var data in response.MarketData.Data)
+                {
+                    var row = CreateRow(response.MarketData, data);
+
+                    var secId = GetString(row, "SECID");
+
+                    if (!string.IsNullOrEmpty(secId))
+                    {
+                        marketDataBySecId[secId] = row;
+                    }
+                }
+            }
+
+            foreach (var secData in response.Securities.Data)
+            {
+                var secRow = CreateRow(response.Securities, secData);
+
+                var secId = GetString(secRow, "SECID");
+
+                if (string.IsNullOrEmpty(secId))
+                    continue;
+
+                marketDataBySecId.TryGetValue(secId, out var mdRow);
+
+                result.Add(new StockMarketInfo
+                {
+                    SecId = GetString(secRow, "SECID")!,
+                    BoardId = GetString(secRow, "BOARDID")!,
+                    ShortName = GetString(secRow, "SHORTNAME")!,
+                    Isin = GetString(secRow, "ISIN")!,
+                    CurrencyId = GetString(secRow, "CURRENCYID")!,
+                    Last = GetDouble(mdRow, "LAST"),
+                    Change = GetDouble(mdRow, "CHANGE"),
+                    ChangePercent = GetDouble(mdRow, "LASTCHANGEPRCNT"),
+                    Open = GetDouble(mdRow, "OPEN"),
+                    Close = GetDouble(mdRow, "CLOSEPRICE"),
+                    Low = GetDouble(mdRow, "LOW"),
+                    High = GetDouble(mdRow, "HIGH"),
+                    TradingStatus = GetString(mdRow, "TRADINGSTATUS") ?? string.Empty,
+                });
+            }
+
+            return result;
+        }
+
+        private async Task<MoexResponse?> GetMoexResponseAsync(string secId, CancellationToken cancellationToken)
         {
             var url = $"engines/stock/markets/shares/boards/TQBR/securities/{secId}.json";
 
@@ -89,7 +153,7 @@ namespace TrendSense.Infrastructure.Moex
 
             await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
 
-            return await JsonSerializer.DeserializeAsync<MoexMarketDataResponse>(stream, JsonOptions, cancellationToken);
+            return await JsonSerializer.DeserializeAsync<MoexResponse>(stream, JsonOptions, cancellationToken);
         }
 
         private static Dictionary<string, JsonElement> CreateRow(MoexBlock block, List<JsonElement> row)
