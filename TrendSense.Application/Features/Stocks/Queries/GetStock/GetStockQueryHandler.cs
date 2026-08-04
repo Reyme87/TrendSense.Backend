@@ -3,7 +3,7 @@ using MediatR;
 using TrendSense.Application.Dtos;
 using TrendSense.Application.Interfaces;
 
-namespace TrendSense.Application.Features.Stocks.Queries
+namespace TrendSense.Application.Features.Stocks.Queries.GetStock
 {
     public class GetStockQueryHandler : IRequestHandler<GetStockQuery, StockMarketInfo?>
     {
