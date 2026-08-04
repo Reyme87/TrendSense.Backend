@@ -25,7 +25,7 @@ namespace TrendSense.Persistence.EntityTypeConfiguration
                 .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(x => x.Sector)
+            builder.Property(x => x.Currency)
                 .HasMaxLength(100)
                 .IsRequired();
 
