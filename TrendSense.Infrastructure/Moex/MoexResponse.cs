@@ -2,7 +2,7 @@
 
 namespace TrendSense.Infrastructure.Moex
 {
-    public class MoexMarketDataResponse
+    public class MoexResponse
     {
         [JsonPropertyName("securities")]
         public MoexBlock? Securities { get; set; }
