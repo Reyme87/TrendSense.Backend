@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Features\PriceHistory\Queries\" />
-    <Folder Include="Features\Stocks\Queries\" />
   </ItemGroup>
 
 </Project>
