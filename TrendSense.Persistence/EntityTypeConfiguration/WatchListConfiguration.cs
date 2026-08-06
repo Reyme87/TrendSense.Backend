@@ -18,10 +18,10 @@ namespace TrendSense.Persistence.EntityTypeConfiguration
                 .WithMany(x => x.Collection)
                 .HasForeignKey(x => x.UserId);
 
-            builder.HasMany(x => x.Items)
-                .WithOne()
-                .HasForeignKey(x => x.WatchListId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //builder.HasMany(x => x.Items)
+            //    .WithOne()
+            //    .HasForeignKey(x => x.WatchListId)
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
