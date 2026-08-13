@@ -19,8 +19,4 @@
     <ProjectReference Include="..\TrendSense.Domain\TrendSense.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\PriceHistory\Queries\" />
-  </ItemGroup>
-
 </Project>

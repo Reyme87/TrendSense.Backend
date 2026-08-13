@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrendSense.Application.Dtos;
-using TrendSense.Application.Features.Stocks.Commands;
+using TrendSense.Application.Features.Stocks.Commands.SyncStocks;
+using TrendSense.Application.Features.Stocks.Commands.UpdateStockPrices;
 using TrendSense.Application.Features.Stocks.Queries.GetDbStocks;
+using TrendSense.Application.Features.Stocks.Queries.GetPriceHistory;
 using TrendSense.Application.Features.Stocks.Queries.GetStock;
 
 namespace TrendSense.WebApi.Controllers
@@ -56,8 +58,40 @@ namespace TrendSense.WebApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Gets stocks list from exchange and updates data in DB
+        /// </summary>
+        /// <returns>
+        /// Returns NoContent
+        /// </returns>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <response code="204">Data updated</response>
         [HttpPost("sync")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Sync(SyncStocksCommand command, CancellationToken cancellationToken)
+        {
+            await Mediator.Send(command, cancellationToken);
+
+            return NoContent();
+        }
+
+        [HttpGet("{id:guid}/history")]
+        public async Task<ActionResult<IReadOnlyList<PriceHistoryDto>>> GetHistory(Guid id, CancellationToken cancellationToken)
+        {
+            var query = new GetPriceHistoryQuery
+            {
+                StockId = id
+            };
+
+            var result = await Mediator.Send(query, cancellationToken);
+
+            return Ok(result);
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdatePrices(UpdateStockPricesCommand command, CancellationToken cancellationToken)
         {
             await Mediator.Send(command, cancellationToken);
 
