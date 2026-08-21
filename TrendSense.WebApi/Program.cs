@@ -14,6 +14,7 @@ using TrendSense.Domain;
 using TrendSense.Infrastructure;
 using TrendSense.Infrastructure.Common.JwtTokens;
 using TrendSense.Infrastructure.Common.UserService;
+using TrendSense.Infrastructure.StockBackgroundService;
 using TrendSense.Persistence;
 using TrendSense.WebApi;
 using TrendSense.WebApi.Middleware;
@@ -29,6 +30,9 @@ builder.Services.AddAutoMapper(config =>
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure();
+
+builder.Services.AddHostedService<StockPriceUpdateBackgroundService>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>()
