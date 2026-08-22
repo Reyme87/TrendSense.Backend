@@ -7,7 +7,7 @@ namespace TrendSense.Application.Features.Auth.Commands.Register
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
     {
-        public UserManager<AppUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
         public RegisterUserCommandHandler(UserManager<AppUser> userManager) => _userManager = userManager;
 
