@@ -1,8 +1,10 @@
-﻿namespace TrendSense.Tests.Common
+﻿using TrendSense.Persistence;
+
+namespace TrendSense.Tests.Common
 {
     public class TestCrudBase : IDisposable
     {
-        public TrendSenseContextFactory Context;
+        public AppDbContext Context;
 
         public TestCrudBase()
         {
