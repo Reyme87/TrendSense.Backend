@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Data.Entity;
 using TrendSense.Application.Interfaces;
 using TrendSense.Domain;
 

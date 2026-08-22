@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using TrendSense.Application.Interfaces;
 
 namespace TrendSense.Application.Features.Stocks.Queries.GetDbStocks
@@ -12,7 +12,7 @@ namespace TrendSense.Application.Features.Stocks.Queries.GetDbStocks
 
         public async Task<IReadOnlyList<StockDto>> Handle(GetDbStocksQuery request, CancellationToken cancellationToken)
         {
-            return _dbContext.Stocks
+            return await _dbContext.Stocks
                 .AsNoTracking()
                 .Select(stock => new StockDto
                 {
@@ -25,7 +25,7 @@ namespace TrendSense.Application.Features.Stocks.Queries.GetDbStocks
                     DayChangePercent = stock.DayChangePercent,
                     UpdatedAt = stock.UpdatedAt
                 })
-                .ToList();
+                .ToListAsync(cancellationToken);
         }
     }
 }

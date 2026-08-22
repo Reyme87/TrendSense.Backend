@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using TrendSense.Application.Interfaces;
 
 namespace TrendSense.Application.Features.Stocks.Queries.GetPriceHistory
@@ -12,7 +12,7 @@ namespace TrendSense.Application.Features.Stocks.Queries.GetPriceHistory
 
         public async Task<IReadOnlyList<PriceHistoryDto>> Handle(GetPriceHistoryQuery request, CancellationToken cancellationToken)
         {
-            return _dbContext.History.AsNoTracking()
+            return await _dbContext.History.AsNoTracking()
                                    .Where(x => x.StockId == request.StockId)
                                    .OrderBy(x => x.RecordedAt)
                                    .Select(x => new PriceHistoryDto
@@ -20,7 +20,7 @@ namespace TrendSense.Application.Features.Stocks.Queries.GetPriceHistory
                                        Price = x.Price,
                                        RecoredAt = x.RecordedAt,
                                    })
-                                   .ToList();
+                                   .ToListAsync(cancellationToken);
         }
     }
 }
