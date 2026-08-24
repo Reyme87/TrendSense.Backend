@@ -7,24 +7,26 @@ Backend-сервис на ASP.NET Core для отслеживания коти�
 
 <br>
 
-![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-Web_API-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![Entity Framework Core](https://img.shields.io/badge/EF_Core-ORM-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![MediatR](https://img.shields.io/badge/MediatR-CQRS-orange?style=for-the-badge)
 ![AutoMapper](https://img.shields.io/badge/AutoMapper-Mapping-blue?style=for-the-badge)
 ![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger-API_Docs-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
-![SQL Server](https://img.shields.io/badge/SQL_Server-Database-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 </div>
 
-## 🛠 Стек технологий
+## Стек технологий
 
 <div align="center">
 
 ![C#](https://skillicons.dev/icons?i=cs)
 ![.NET](https://skillicons.dev/icons?i=dotnet)
 ![SQLite](https://skillicons.dev/icons?i=sqlite)
+![Docker](https://skillicons.dev/icons?i=docker)
 ![Visual Studio](https://skillicons.dev/icons?i=visualstudio)
 ![Git](https://skillicons.dev/icons?i=git)
 ![GitHub](https://skillicons.dev/icons?i=github)
@@ -33,9 +35,9 @@ Backend-сервис на ASP.NET Core для отслеживания коти�
 
 <br>
 
-## 🏗 Архитектура
+## Архитектура
 
-Проект построен на принципах **Clean Architecture** с разделением на 4 слоя:
+Проект построен на принципах Clean Architecture с разделением ответственности между слоями:
 
 - **Domain** — сущности и бизнес-правила без внешних зависимостей
 - **Application** — команды и запросы (CQRS через MediatR), интерфейсы, DTO
@@ -46,37 +48,223 @@ Backend-сервис на ASP.NET Core для отслеживания коти�
 
 <br>
 
-## 🚀 Возможности
+## Возможности
+📊 Работа с акциями
+- получение списка доступных акций MOEX;
+- получение информации по конкретному тикеру;
+- синхронизация акций с MOEX;
+- обновление текущих котировок;
+- хранение истории цен.
+  
+⭐ WatchList
+- создание пользовательских списков;
+- получение списков пользователя;
+- удаление списка;
+- добавление акций;
+- удаление акций;
+- получение акций внутри WatchList.
+  
+🔐 Аутентификация
+- регистрация пользователя;
+- авторизация;
+- ASP.NET Core Identity;
+- JWT access tokens;
+  
+⚙️ Фоновое обновление
 
-- 🔄 Синхронизация котировок акций с MOEX ISS API
-- 📊 Публичный просмотр списка акций и данных по конкретному тикеру
-- 🔐 Регистрация и вход через JWT-аутентификацию (ASP.NET Core Identity)
-- ⭐ Персональные списки наблюдения (watchlists) — создание, удаление, добавление/удаление акций
-- 🧩 Версионирование API
-- 📘 Интерактивная документация через Swagger UI
+Приложение содержит BackgroundService, который периодически обновляет актуальные котировки акций.
 
-<br>
+## Технические особенности
 
-<br>
+- Clean Architecture;
+- CQRS + MediatR;
+- FluentValidation;
+- AutoMapper;
+- ASP.NET Core Identity + JWT;
+- глобальная обработка исключений;
+- API versioning;
+- Swagger/OpenAPI;
+- unit-тесты;
+- Docker.
 
-## 🔧 Быстрый старт
+## Быстрый старт
+
+Для самого простого запуска проекта рекомендуется использовать Docker.
+
+### Требования
+
+Установите:
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+Проверьте:
 
 ```bash
-git clone https://github.com/<ваш-username>/TrendSense.git
+docker --version
+docker compose version
+```
+
+---
+
+### 1. Клонирование
+
+```bash
+git clone https://github.com/Reyme87/TrendSense.git
 cd TrendSense
 ```
 
-Настройте строку подключения и JWT-секрет в `appsettings.Development.json`, затем примените миграции и запустите проект:
+---
 
-```bash
-dotnet ef database update --project src/TrendSense.Persistence --startup-project src/TrendSense.WebApi
-dotnet run --project src/TrendSense.WebApi
+### 2. Настройка JWT
+
+JWT signing key **не хранится в GitHub**.
+
+Создайте файл:
+
+```text
+.env
 ```
 
-После запуска Swagger UI будет доступен по адресу `https://localhost:<port>/`.
+в корне проекта.
+
+Пример:
+
+```env
+JWT_KEY=your-base64-encoded-secret
+```
+
+Файл `.env.example` содержит пример переменной.
+
+---
+
+### 3. Запуск
+
+Из корня проекта выполните:
+
+```bash
+docker compose up --build
+```
+
+Docker Compose запустит приложение в контейнере.
+
+После запуска API будет доступен по адресу:
+
+```text
+http://localhost:8080
+```
+
+Swagger:
+
+```text
+http://localhost:8080/
+```
+
+Остановить приложение:
+
+```bash
+docker compose down
+```
+
+---
+
+## Локальный запуск без Docker
+
+Docker не является обязательным для разработки.
+
+### Требования
+
+- .NET 10 SDK
+- Visual Studio 2026 или другой IDE с поддержкой .NET 10
+
+Проверить версию:
+
+```bash
+dotnet --version
+```
+
+---
+
+### 1. Клонирование
+
+```bash
+git clone https://github.com/Reyme87/TrendSense.git
+cd TrendSense
+```
+
+---
+
+### 2. Настройка JWT через User Secrets
+
+JWT secret не хранится в `appsettings.json` или `appsettings.Development.json`.
+
+Для локальной разработки используется **ASP.NET Core User Secrets**.
+
+Перейдите в проект Web API:
+
+```bash
+cd TrendSense.WebApi
+```
+
+Если User Secrets ещё не настроены:
+
+```bash
+dotnet user-secrets init
+```
+
+Добавьте JWT key:
+
+```bash
+dotnet user-secrets set "Jwt:Key" "your-base64-encoded-secret"
+```
+
+Проверить:
+
+```bash
+dotnet user-secrets list
+```
+
+После этого вернитесь в корень решения:
+
+```bash
+cd ..
+```
+
+---
+
+### 3. Запуск
+
+```bash
+dotnet run --project TrendSense.WebApi
+```
+
+После запуска Swagger будет доступен по адресу, указанному ASP.NET Core в консоли.
+
+Обычно это:
+
+```text
+https://localhost:xxxx/
+```
+
+---
+
+## API
+
+После запуска приложения Swagger предоставляет интерактивную документацию API.
+
+Основные группы endpoints:
+
+```text
+/api/v1/Auth
+/api/v1/Stocks
+/api/v1/WatchLists
+```
+
+Для защищённых endpoints необходимо сначала получить JWT token через authentication endpoints и передать его в Swagger через кнопку **Authorize**.
 
 <br>
 
 ## 📄 О проекте
 
-Pet-проект, созданный в процессе изучения ASP.NET Core, для отработки Clean Architecture, CQRS и работы с внешними API на практике.
+Проект создан как pet-project для практики разработки backend-приложений на ASP.NET Core и работы с внешними API.
+
+Проект находится в активной разработке.
