@@ -4,16 +4,17 @@
     {
         public Guid Id { get; set; }
 
-        public string TickerSymbol { get; set; }
-        public string Name { get; set; }
-        
-        public string Exchange { get; set; }
-        public string Sector { get; set; }
+        public string TickerSymbol { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
-        public decimal LastPrice { get; set; }
+        public string Isin { get; set; } = null!;
+        public string Currency { get; set; } = null!;
 
-        public decimal DayChange { get; set; }
-        public decimal DayChangePercent { get; set; }
+        public string Exchange { get; set; } = null!;
+
+        public double? LastPrice { get; set; }
+        public double? DayChange { get; set; }
+        public double? DayChangePercent { get; set; }
 
         public DateTime UpdatedAt { get; set; }
     }

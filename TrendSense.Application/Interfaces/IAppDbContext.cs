@@ -5,7 +5,7 @@ namespace TrendSense.Application.Interfaces
 {
     public interface IAppDbContext 
     {
-        DbSet<AppUser> Users { get; set; }
+        //DbSet<AppUser> Users { get; set; }
         DbSet<Stock> Stocks { get; set; }
         DbSet<WatchList> WatchLists { get; set; }
         DbSet<WatchListItem> Items { get; set; }
