@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Events;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using TrendSense.Application;
@@ -20,6 +22,12 @@ using TrendSense.WebApi;
 using TrendSense.WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration().MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .WriteTo.File("TrendSenseWebAppLog-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddAutoMapper(config =>
 {
@@ -98,7 +106,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception e)
     {
-        /////
+        Log.Fatal(e, "An error occurred while app initialization");
     }
 }
 
@@ -113,6 +121,7 @@ app.UseSwaggerUI(config =>
 });
 
 app.UseCustomExceptionHandler();
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

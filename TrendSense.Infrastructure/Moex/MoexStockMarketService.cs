@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using Microsoft.Extensions.Logging;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Timers;
 using TrendSense.Application.Dtos;
@@ -15,11 +16,14 @@ namespace TrendSense.Infrastructure.Moex
         };
 
         private readonly HttpClient _httpClient;
+        private readonly ILogger<MoexStockMarketService> _logger;
 
-        public MoexStockMarketService(HttpClient httpClient) => _httpClient = httpClient;
+        public MoexStockMarketService(HttpClient httpClient, ILogger<MoexStockMarketService> logger) => (_httpClient, _logger) = (httpClient, logger);
 
         public async Task<StockMarketInfo?> GetStockAsync(string secId, CancellationToken cancellationToken)
         {
+            _logger.LogDebug("Receiveng single stock from MOEX");
+
             var response = await GetMoexResponseAsync(secId, cancellationToken);
 
             if (response?.Securities is null || response.Securities.Data.Count == 0 ||
@@ -62,6 +66,8 @@ namespace TrendSense.Infrastructure.Moex
                 time = parsedTime;
             }
 
+            _logger.LogInformation("Received a {@Ticker} stock from MOEX", security.SecId);
+
             return new StockMarketInfo
             {
                 SecId = security.SecId,
@@ -83,6 +89,8 @@ namespace TrendSense.Infrastructure.Moex
 
         public async Task<IReadOnlyList<StockMarketInfo?>> GetStocksListAsync(CancellationToken cancellationToken)
         {
+            _logger.LogDebug("Requesting stocks from MOEX");
+
             const string url = "engines/stock/markets/shares/boards/TQBR/securities.json";
 
             var response = await _httpClient.GetFromJsonAsync<MoexResponse>(url, cancellationToken);
@@ -139,6 +147,8 @@ namespace TrendSense.Infrastructure.Moex
                     TradingStatus = GetString(mdRow, "TRADINGSTATUS") ?? string.Empty,
                 });
             }
+
+            _logger.LogInformation("Received {@StockCount} stocks from MOEX", result.Count);
 
             return result;
         }

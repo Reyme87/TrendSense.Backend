@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using TrendSense.Application.Features.Stocks.Commands.SyncStocks;
 using TrendSense.Application.Interfaces;
 using TrendSense.Domain;
@@ -10,12 +11,15 @@ namespace TrendSense.Application.Features.Stocks.Commands
         private readonly IAppDbContext _dbContext;
 
         private readonly IStockMarketService _stockMarketService;
+        private readonly ILogger<SyncStocksCommandHandler> _logger;
 
-        public SyncStocksCommandHandler(IAppDbContext dbContext, IStockMarketService stockMarketService) =>
-            (_dbContext, _stockMarketService) = (dbContext, stockMarketService);
+        public SyncStocksCommandHandler(IAppDbContext dbContext, IStockMarketService stockMarketService, ILogger<SyncStocksCommandHandler> logger) =>
+            (_dbContext, _stockMarketService, _logger) = (dbContext, stockMarketService, logger);
 
         public async Task<Unit> Handle(SyncStocksCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Starting stocks synchronization");
+
             var marketStocks = await _stockMarketService.GetStocksListAsync(cancellationToken);
 
             foreach (var marketStock in marketStocks)
@@ -57,6 +61,8 @@ namespace TrendSense.Application.Features.Stocks.Commands
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);
+
+            _logger.LogInformation("Synchronization completed");
 
             return Unit.Value;
         }
