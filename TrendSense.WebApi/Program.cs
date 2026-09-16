@@ -121,6 +121,7 @@ app.UseSwaggerUI(config =>
 });
 
 app.UseCustomExceptionHandler();
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
