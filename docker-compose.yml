@@ -10,3 +10,7 @@ services:
             ASPNETCORE_ENVIRONMENT: Development
             ASPNETCORE_URLS: http://+:8080
             Jwt__Key: ${JWT_KEY}
+            ConnectionStrings__Redis: redis:6379
+    redis:
+        image: redis:8-alpine
+        container_name: trendsense-redis
