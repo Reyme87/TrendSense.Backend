@@ -9,12 +9,12 @@ namespace TrendSense.Application.Features.Stocks.Commands
     public class SyncStocksCommandHandler : IRequestHandler<SyncStocksCommand, Unit>
     {
         private readonly IAppDbContext _dbContext;
-
+        private readonly ICacheService _cache;
         private readonly IStockMarketService _stockMarketService;
         private readonly ILogger<SyncStocksCommandHandler> _logger;
 
-        public SyncStocksCommandHandler(IAppDbContext dbContext, IStockMarketService stockMarketService, ILogger<SyncStocksCommandHandler> logger) =>
-            (_dbContext, _stockMarketService, _logger) = (dbContext, stockMarketService, logger);
+        public SyncStocksCommandHandler(IAppDbContext dbContext, IStockMarketService stockMarketService, ILogger<SyncStocksCommandHandler> logger, ICacheService cache) =>
+            (_dbContext, _stockMarketService, _logger, _cache) = (dbContext, stockMarketService, logger, cache);
 
         public async Task<Unit> Handle(SyncStocksCommand request, CancellationToken cancellationToken)
         {
@@ -61,6 +61,8 @@ namespace TrendSense.Application.Features.Stocks.Commands
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);
+
+            await _cache.RemoveAsync("stocks:all", cancellationToken);
 
             _logger.LogInformation("Synchronization completed");
 
