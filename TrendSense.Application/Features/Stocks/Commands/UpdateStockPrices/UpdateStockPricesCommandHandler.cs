@@ -7,10 +7,11 @@ namespace TrendSense.Application.Features.Stocks.Commands.UpdateStockPrices
     public class UpdateStockPricesCommandHandler : IRequestHandler<UpdateStockPricesCommand, Unit>
     {
         private readonly IAppDbContext _dbContext;
+        private readonly ICacheService _cache;
         private readonly IStockMarketService _stockMarketService;
 
-        public UpdateStockPricesCommandHandler(IAppDbContext dbContext, IStockMarketService stockMarketService) => 
-            (_dbContext, _stockMarketService) = (dbContext, stockMarketService);
+        public UpdateStockPricesCommandHandler(IAppDbContext dbContext, IStockMarketService stockMarketService, ICacheService cache) => 
+            (_dbContext, _stockMarketService, _cache) = (dbContext, stockMarketService, cache);
 
         public async Task<Unit> Handle(UpdateStockPricesCommand request, CancellationToken cancellationToken)
         {
@@ -46,6 +47,8 @@ namespace TrendSense.Application.Features.Stocks.Commands.UpdateStockPrices
             }
 
             await _dbContext.SaveChangesAsync(cancellationToken);
+
+            await _cache.RemoveAsync("stocks:all", cancellationToken);
 
             return Unit.Value;
         }
