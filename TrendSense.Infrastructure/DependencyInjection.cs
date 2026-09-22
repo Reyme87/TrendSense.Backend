@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrendSense.Application.Interfaces;
+using TrendSense.Infrastructure.Caching;
 using TrendSense.Infrastructure.Moex;
 
 namespace TrendSense.Infrastructure
@@ -18,6 +19,8 @@ namespace TrendSense.Infrastructure
             {
                 client.BaseAddress = new Uri("https://iss.moex.com/iss/");
             });
+
+            services.AddScoped<ICacheService, RedisCacheService>();
 
             return services;
         }
