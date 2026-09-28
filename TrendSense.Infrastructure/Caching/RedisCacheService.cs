@@ -25,8 +25,12 @@ namespace TrendSense.Infrastructure.Caching
 
                 if (json is null)
                 {
+                    _logger.LogInformation("Redis cache MISS: {@CacheKey}", key);
+
                     return default;
                 }
+
+                _logger.LogInformation("Redis cache HIT: {@CacheKey}", key);
 
                 return JsonSerializer.Deserialize<T>(json, _jsonOptions);
             }
