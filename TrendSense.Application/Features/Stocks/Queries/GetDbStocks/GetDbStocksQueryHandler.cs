@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TrendSense.Application.Common.Caching;
 using TrendSense.Application.Interfaces;
 
 namespace TrendSense.Application.Features.Stocks.Queries.GetDbStocks
 {
     public class GetDbStocksQueryHandler : IRequestHandler<GetDbStocksQuery, IReadOnlyList<StockDto>>
     {
-        private const string CacheKey = "stocks:all";
         private static readonly TimeSpan CacheExpiration = TimeSpan.FromMinutes(1);
         private readonly IAppDbContext _dbContext;
         private readonly ICacheService _cache;
@@ -15,7 +15,7 @@ namespace TrendSense.Application.Features.Stocks.Queries.GetDbStocks
 
         public async Task<IReadOnlyList<StockDto>> Handle(GetDbStocksQuery request, CancellationToken cancellationToken)
         {
-            var cached = await _cache.GetAsync<IReadOnlyList<StockDto>>(CacheKey, cancellationToken);
+            var cached = await _cache.GetAsync<IReadOnlyList<StockDto>>(CacheKeys.Stocks, cancellationToken);
 
             if (cached is not null)
             {
@@ -37,7 +37,7 @@ namespace TrendSense.Application.Features.Stocks.Queries.GetDbStocks
                 })
                 .ToListAsync(cancellationToken);
 
-            await _cache.SetAsync(CacheKey, stocks, CacheExpiration, cancellationToken);
+            await _cache.SetAsync(CacheKeys.Stocks, stocks, CacheExpiration, cancellationToken);
 
             return stocks;
         }
